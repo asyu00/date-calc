@@ -1,0 +1,151 @@
+<html>
+    <head>
+        <title>Date Diff Calculator</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f0f0f0;
+                color: #333;
+                height: 100vh;
+            }
+	    div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+	    }
+            h1 {
+                text-align: center;
+                color: #007acc;
+            }
+            .card {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            table {
+                width: 100%;
+                margin-bottom: 20px;
+                border-collapse: collapse;
+            }
+            th {
+                padding-bottom: 10px;
+                color: #555;
+            }
+            td {
+                padding: 5px 10px;
+            }
+            input[type=text], input[type=number] {
+                width: 100%;
+                padding: 10px;
+                margin: 5px 0;
+                box-sizing: border-box;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                font-size: 16px;
+            }
+            input[type=submit] {
+                width: 100%;
+                background-color: #007acc;
+                color: white;
+                padding: 10px 20px;
+                margin-top: 10px;
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+            input[type=submit]:hover {
+                background-color: #005fa3;
+            }
+            p {
+                margin-bottom: 5px;
+                font-weight: bold;
+                color: #333;
+            }
+        </style>
+	<script>
+		const Num = Object.freeze({
+   		    YEAR:   0,
+		    MONTH:  1,
+		    DAY: 2
+		});
+
+            function calculateDifference(event) {
+                event.preventDefault();
+		const BOUND = [null, 12, 30]
+                const year1 = document.querySelector('#year1').value;
+                const month1 = document.querySelector('#month1').value;
+                const day1 = document.querySelector('#day1').value;
+
+                const year2 = document.querySelector('#year2').value;
+                const month2 = document.querySelector('#month2').value;
+                const day2 = document.querySelector('#day2').value;
+		const dateDiff = [year1-year2, month1-month2, day1-day2]
+		// Run adjustments
+		while (dateDiff[Num.DAY] < 0) {
+		  dateDiff[Num.DAY]+=BOUND[Num.DAY]
+		  dateDiff[Num.MONTH]--
+		}
+
+		while (dateDiff[Num.MONTH] < 0) {
+		  dateDiff[Num.MONTH]+=BOUND[Num.MONTH]
+		  dateDiff[Num.YEAR]--
+		}
+		document.querySelector('#result').innerText = `Result: ${dateDiff[Num.YEAR]} Years ${dateDiff[Num.MONTH]} Months ${dateDiff[Num.DAY]} Days`;
+ 		// Rounding
+		if (dateDiff[Num.DAY] >= 15) {
+		  dateDiff[Num.DAY] = 0
+		  dateDiff[Num.MONTH]++
+		}
+		document.querySelector('#result-rounded').innerText = `Result Rounded: ${dateDiff[Num.YEAR]} Years ${dateDiff[Num.MONTH]} Months ${dateDiff[Num.DAY]} Days`;
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Date Difference Calculator</h1>
+	<div>
+			<form class=card onsubmit="calculateDifference(event)">
+		    <p>Date 1</p>
+		    <table>
+			<thead>
+			    <tr>
+				<th>Year</th>
+				<th>Month</th>
+				<th>Day</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <tr>
+				<td><input type="text" id="year1" placeholder="2024" required /></td>
+				<td><input type="number" id="month1" min="1" max="12" placeholder="8" required /></td>
+				<td><input type="number" id="day1" min="1" max="31" placeholder="9" required /></td>
+			    </tr>
+			</tbody>
+		    </table>
+		    <p>Date 2</p>
+		    <table>
+			<thead>
+			    <tr>
+				<th>Year</th>
+				<th>Month</th>
+				<th>Day</th>
+			    </tr>
+			</thead>
+			<tbody>
+			    <tr>
+				<td><input type="text" id="year2" placeholder="2020" required /></td>
+				<td><input type="number" id="month2" min="1" max="12" placeholder="1" required /></td>
+				<td><input type="number" id="day2" min="1" max="31" placeholder="14" required /></td>
+			    </tr>
+			</tbody>
+		    </table>
+		    <div id="result">Result: -</div>
+		    <br>
+		    <div id="result-rounded">Result Rounded: -</div>
+		    <input type="submit" value="Calculate" />
+	  </form>
+	</div>
+    </body>
+</html>
+
