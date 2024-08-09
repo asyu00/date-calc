@@ -81,7 +81,10 @@
                 const year2 = document.querySelector('#year2').value;
                 const month2 = document.querySelector('#month2').value;
                 const day2 = document.querySelector('#day2').value;
-		const dateDiff = [year1-year2, month1-month2, day1-day2]
+		let dateDiff = [year1-year2, month1-month2, day1-day2]
+		if (dateDiff[Num.YEAR] < 0) {
+		 dateDiff = [year2-year1, month2-month1, day2-day1] 
+		}
 		// Run adjustments
 		while (dateDiff[Num.DAY] < 0) {
 		  dateDiff[Num.DAY]+=BOUND[Num.DAY]
